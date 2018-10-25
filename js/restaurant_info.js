@@ -244,7 +244,14 @@ submitReview = (form) => {
    if (!(reviewName && reviewRating && reviewComments)) {
     return false;
   }
- 
+ // Display loader
+    const reviewDiv = document.getElementById('review-submission');
+    reviewDiv.style.display = 'none';
+    
+    const loader = document.createElement('div');
+    loader.classList.add('loader');
+    loader.id = ('review-loader');
+    document.getElementById('review-submission-container').append(loader);
   // POST content
   const postData = {
     'restaurant_id': restaurantID,
@@ -255,9 +262,11 @@ submitReview = (form) => {
    // Submit post
   DBHelper.postRestaurantReview(postData, (error, response) => {
     if (error) {
+      hideLoader();
       displayReviewSubmissionError(error);
       return false;
     }
+    hideLoader();    
     displayReviewSubmissionSuccess();
     displayRecentlySubmittedReview(response);
   });
@@ -285,4 +294,19 @@ displayRecentlySubmittedReview = (reviewData) => {
   const newReview = createReviewHTML(reviewData);
   newReview.style.backgroundColor = '#3397DB;';
   reviewsList.insertBefore(newReview, reviewsList.childNodes[0]);
+}
+/**
+ * Hide loader
+ */
+hideLoader = () => {
+  const reviewLoader = document.getElementById('review-loader');
+  if (reviewLoader) {
+    reviewLoader.parentNode.removeChild(reviewLoader);
+    document.getElementById('review-name').value = '';
+    document.getElementById('review-rating').value = '';
+    document.getElementById('review-comments').value = '';
+    document.getElementById('review-submission').style.display = 'block';
+    return true;
+  }
+  return false;
 }

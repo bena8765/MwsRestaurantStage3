@@ -266,7 +266,7 @@ static fetchReviews(id, callback) {
   /**
    * POST a review to the database
    */
-  static postRestaurantReview(postData) {
+  static postRestaurantReview(postData, callback) {
     const postURL = 'http://localhost:1337/reviews'
     fetch(postURL, {
       method: 'POST',
@@ -278,6 +278,8 @@ static fetchReviews(id, callback) {
     })
     .then(json => {
       // Confirm review submission
+      callback(null,json)
+      DBHelper.addReviewToDb(json);      
       console.log(json);
     })
     .catch(error => {
@@ -304,6 +306,23 @@ static fetchReviews(id, callback) {
           })
         }
       })
+    });
+  }
+  /**
+   * Add a review to idb
+   */
+  static addReviewToDb(review) {
+    DBHelper.openDatabase().then(db => {
+      const store = db.transaction(['reviews'], 'readwrite')
+      .objectStore('reviews');
+      store.get(review.restaurant_id).then(data => {
+        let reviews = review;
+        if (data) {
+          data.push(review);
+          reviews = data;
+        }
+        store.put(reviews, review.restaurant_id);
+      });
     });
   }
    static openDatabase() {
