@@ -62,6 +62,17 @@ fetchRestaurantFromURL = (callback) => {
         console.error(error);
         return;
       }
+      if (!self.restaurant.reviews) {
+        restaurant.reviews = DBHelper.fetchReviews(self.restaurant.id, (error, reviews) => {
+          if (!error) {
+            self.restaurant.reviews = reviews;
+            // fill reviews
+            //remove reviews
+            removeReviewsHTML();
+            fillReviewsHTML();
+          }
+        });
+      }
       fillRestaurantHTML();
       callback(null, restaurant)
     });
@@ -128,11 +139,17 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h2');
-  title.setAttribute('role', 'heading');
-  title.innerHTML = 'Reviews';
-  title.tabIndex = 0;
-  container.appendChild(title);
+  DBHelper.getPendingReviews((error, reviews) => {
+    //load prior reviews..
+    reviews.forEach((review) => {
+      DBHelper.postRestaurantReview(review, (error, response) => {
+        if (error) {
+          console.log("fillReviewsHTML " + error);
+        }
+        displayRecentlySubmittedReview(response);
+      });
+    });
+  });
 
   if (!reviews) {
     const noReviews = document.createElement('p');
@@ -148,6 +165,11 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   });
   container.appendChild(ul);
 }
+removeReviewsHTML = () => {
+  const list = document.getElementById('reviews-list');
+  list.innerHTML = "";
+}
+
 
 /**
  * Create review HTML and add it to the webpage.
@@ -160,10 +182,20 @@ createReviewHTML = (review) => {
   name.innerHTML = review.name;
   li.appendChild(name);
 
-  const date = document.createElement('p');
-  date.innerHTML = review.date;
-  date.tabIndex = 0;
-  li.appendChild(date);
+  if (review.createdAt) {
+    const date = document.createElement('p');
+    date.innerHTML = `Posted: ${new Date(review.createdAt)}`;
+    date.classList.add('review-date');
+    li.appendChild(date);
+  }
+//Update the date
+  // Last update
+  if (review.updatedAt && review.updatedAt !== review.createdAt) {
+    const updatedDate = document.createElement('p');
+    updatedDate.innerHTML = `Updated: ${new Date(review.updatedAt)}`;
+    date.classList.add('review-date');
+    li.appendChild(date);
+  }
 
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
