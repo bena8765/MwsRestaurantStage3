@@ -184,7 +184,7 @@ createReviewHTML = (review) => {
 
   if (review.createdAt) {
     const date = document.createElement('p');
-    date.innerHTML = `Posted: ${new Date(review.createdAt)}`;
+    date.innerHTML = `Posted: ${new Date(review.createdAt).toDateString()}`;
     date.classList.add('review-date');
     li.appendChild(date);
   }
@@ -192,7 +192,7 @@ createReviewHTML = (review) => {
   // Last update
   if (review.updatedAt && review.updatedAt !== review.createdAt) {
     const updatedDate = document.createElement('p');
-    updatedDate.innerHTML = `Updated: ${new Date(review.updatedAt)}`;
+    updatedDate.innerHTML = `Updated: ${new Date(review.updatedAt).toDateString()}`;
     date.classList.add('review-date');
     li.appendChild(date);
   }
