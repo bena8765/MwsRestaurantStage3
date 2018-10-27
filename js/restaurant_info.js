@@ -99,6 +99,13 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   image.tabIndex = 0;
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   image.srcset = DBHelper.imageSetUrlForRestaurant(restaurant);
+
+  // Add favorite button
+  const starButton = DBHelper.favoriteButton(restaurant);
+  starButton.classList.add('restaurant-favorite-star');
+  const primaryStarButton = document.getElementById('favorite-button');
+  primaryStarButton.parentNode.replaceChild(starButton, primaryStarButton);
+
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.tabIndex = 0;
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -107,8 +114,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
+
+
 }
 
 /**
@@ -328,7 +335,7 @@ displayReviewSubmissionError = (error) => {
 displayRecentlySubmittedReview = (reviewData) => {
   const reviewsList = document.getElementById('reviews-list');
   const newReview = createReviewHTML(reviewData);
-  newReview.style.backgroundColor = '#3397DB;';
+  newReview.style.backgroundColor = '#3397DB';
   reviewsList.insertBefore(newReview, reviewsList.childNodes[0]);
 }
 /**

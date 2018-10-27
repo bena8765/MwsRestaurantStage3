@@ -119,7 +119,7 @@ updateRestaurants = () => {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
     }
-  })
+  });
 }
 
 /**
@@ -186,6 +186,9 @@ createRestaurantHTML = (restaurant) => {
   more.href = DBHelper.urlForRestaurant(restaurant);
   more.role='link';
   li.append(more)
+
+  // Favorite button
+  li.append(DBHelper.favoriteButton(restaurant));
 
   return li
 }
