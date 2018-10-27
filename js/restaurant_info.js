@@ -105,7 +105,6 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   starButton.classList.add('restaurant-favorite-star');
   const primaryStarButton = document.getElementById('favorite-button');
   primaryStarButton.parentNode.replaceChild(starButton, primaryStarButton);
-
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.tabIndex = 0;
   cuisine.innerHTML = restaurant.cuisine_type;
@@ -114,8 +113,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-
-
+  // fill reviews
+  //fillReviewsHTML();
 }
 
 /**
@@ -160,13 +159,11 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 
   if (!reviews) {
     const noReviews = document.createElement('p');
-    noReviews.tabIndex = 0;
     noReviews.innerHTML = 'No reviews yet!';
     container.appendChild(noReviews);
     return;
   }
   const ul = document.getElementById('reviews-list');
-  ul.setAttribute('role', 'list');
   reviews.forEach(review => {
     ul.appendChild(createReviewHTML(review));
   });
@@ -176,7 +173,6 @@ removeReviewsHTML = () => {
   const list = document.getElementById('reviews-list');
   list.innerHTML = "";
 }
-
 
 /**
  * Create review HTML and add it to the webpage.
@@ -198,12 +194,11 @@ createReviewHTML = (review) => {
 //Update the date
   // Last update
   if (review.updatedAt && review.updatedAt !== review.createdAt) {
-    const updatedDate = document.createElement('p');
-    updatedDate.innerHTML = `Updated: ${new Date(review.updatedAt).toDateString()}`;
+    const updatedDate = document.createElement('p');    
+    date.innerHTML = `Posted: ${new Date(review.createdAt).toDateString()}`;
     date.classList.add('review-date');
     li.appendChild(date);
   }
-
   const rating = document.createElement('p');
   rating.innerHTML = `Rating: ${review.rating}`;
   rating.tabIndex = 0;
@@ -248,17 +243,19 @@ submitReview = (form) => {
   const reviewRating = form.elements.namedItem('review-rating');
   const reviewComments = form.elements.namedItem('review-comments');
   const restaurantID = self.restaurant.id;
-   if (!(reviewName && reviewRating && reviewComments)) {
+
+  if (!(reviewName && reviewRating && reviewComments)) {
     return false;
   }
- // Display loader
-    const reviewDiv = document.getElementById('review-submission');
-    reviewDiv.style.display = 'none';
-    
-    const loader = document.createElement('div');
-    loader.classList.add('loader');
-    loader.id = ('review-loader');
-    document.getElementById('review-submission-container').append(loader);
+    // Display loader
+  const reviewDiv = document.getElementById('review-submission');
+  reviewDiv.style.display = 'none';
+  
+  const loader = document.createElement('div');
+  loader.classList.add('loader');
+  loader.id = ('review-loader');
+  document.getElementById('review-submission-container').append(loader);
+
   // POST content
   const postData = {
     'restaurant_id': restaurantID,
@@ -266,14 +263,15 @@ submitReview = (form) => {
     'rating': reviewRating.value,
     'comments': reviewComments.value
   }
-   // Submit post
+
+  // Submit post
   DBHelper.postRestaurantReview(postData, (error, response) => {
     if (error) {
       hideLoader();
       displayReviewSubmissionError(error);
       return false;
     }
-    hideLoader();    
+    hideLoader();
     displayReviewSubmissionSuccess();
     displayRecentlySubmittedReview(response);
   });
@@ -283,18 +281,18 @@ submitReview = (form) => {
  * Display confirmation modal
  */
 displayConfirmationModal = (options) => {
- 
+
   const reviewModal = document.createElement('div');
   reviewModal.classList.add('review-modal');
   reviewModal.id = 'review-modal';
-  // Modal tittle
+// Modal tittle
   if (options.title) {
     const modalTitle = document.createElement('h3');
     modalTitle.innerHTML = options.title;
     modalTitle.classList.add('review-modal-title');
     reviewModal.append(modalTitle);
   }
-  // Modal details
+// Modal details
   if (options.details) {
     const modalDetails = document.createElement('p');
     modalDetails.innerHTML = options.details;
@@ -310,7 +308,8 @@ displayConfirmationModal = (options) => {
     reviewModal.parentNode.removeChild(reviewModal);
   });
   reviewModal.append(modalConfirm);
-   // Add it all to review section
+
+  // Add it all to review section
   document.getElementById('review-submission-container').append(reviewModal);
 }
 //Succesful submission
@@ -319,7 +318,6 @@ displayReviewSubmissionSuccess = () => {
     title: 'Success',
     details: 'Your review has been submitted successfully.'
   }
-  
   displayConfirmationModal(modalData);
 }
 //Error on submission
@@ -328,14 +326,13 @@ displayReviewSubmissionError = (error) => {
     title: 'Error',
     details: 'Your review will be resubmitted when possible. We apologize for the inconvenience.'
   }
-  
   displayConfirmationModal(modalData);
 }
-//Display new review 
+//Display new review
 displayRecentlySubmittedReview = (reviewData) => {
   const reviewsList = document.getElementById('reviews-list');
   const newReview = createReviewHTML(reviewData);
-  newReview.style.backgroundColor = '#3397DB';
+  newReview.style.backgroundColor = '#FFFFCC';
   reviewsList.insertBefore(newReview, reviewsList.childNodes[0]);
 }
 /**

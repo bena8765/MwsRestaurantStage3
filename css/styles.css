@@ -47,10 +47,6 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   text-align: center;
   text-transform: uppercase;
 }
-.review-submission-container{
-    width: 100%;
-    margin: 0 auto;
-  }
 /* ====================== Navigation ====================== */
 nav {
   width: 100%;
@@ -94,7 +90,7 @@ nav h1 a {
 /* Add a color to all links inside the list */
 #breadcrumb li a {
     color: #0275d8;
-    text-decoration: none;    
+    text-decoration: none;
 }
 
 /* Add a color on mouse-over */
@@ -208,6 +204,11 @@ nav h1 a {
   height: 100%;
   width: 100%;
 }
+.restaurant-info {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
 .inside #footer {
   bottom: 0px;
   position: absolute;
@@ -252,10 +253,13 @@ nav h1 a {
   display: flex;
   flex-wrap: wrap;
 }
-#restaurant-container, #reviews-container {
+#restaurant-container, #reviews-container{
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
   width: 100%;
+}
+#review-submission-container {
+width: 100%;
 }
 #reviews-container h2 {
   color: #f58500;
@@ -480,12 +484,15 @@ table#restaurant-hours, p#restaurant-address {
     float: right;
   }
 }
-/* Begin Form style */
+/* Begin Form style s333*/
 form input, form textarea {
   width: 80%;
   float: left;
   margin-right: 100%;
   height: 24px;
+  border: 1px solid #333;
+  font-size: 1em;
+  font-family: Helvetica;
 }
  form {
  background-color: #fff;
@@ -502,12 +509,14 @@ form input, form textarea {
   width: 100%;
   float: left;
   text-align: left;
+  text-align: left;
+  font-weight: bold;
 }
  form textarea {
   min-height: 100px;
   resize: vertical;
 }
-.review-header{
+.review-header {
   padding: 1em;
   color: #252831;
   font-weight: bold;
@@ -520,9 +529,10 @@ form input, form textarea {
   text-decoration: underline;
 }
 button {
-  background-color: #EE7600;
+  background-color: black;
   border: none;
   color: #fff;
+  font-weight: bold;
   font-size: 10pt;
   margin: 15px 0 0;
   padding: 8px 30px 10px;
@@ -549,6 +559,7 @@ button {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
 #review-submission-container {
   justify-content: center;
   /* padding: 39px 63px 4px; */
@@ -562,8 +573,31 @@ button {
   width: initial;
   margin-top: 18px;
   border-radius: 50px;
+  margin: 12px 22px 22px;
 }
  .review-modal-button {
   position: absolute;
   margin: auto;
+}
+/* Favorite button */
+.favorite-star{
+  margin-top: -56px;
+  float:right !important;
+  font-size: 35px;
+  border: none;
+  background: none;
+  color: #000000;
+}
+/* Star color */
+.favorited{
+  color: #CC0000;
+}
+.restaurant-favorite-star {
+  width: 70px;
+  height: 70px;
+  margin-right: 29px;
+  margin-bottom: 10px;
+  padding: 0;
+  border: 2px solid #000000;
+  border-radius: 50px;
 }

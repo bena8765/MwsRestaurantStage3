@@ -5,6 +5,20 @@ var newMap
 var markers = []
 
 
+/*if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('./sw.js', {
+        scope: '/'
+      }).then( registration => {
+         console.log('Service worker registeration successful');         
+      }).catch(err => {
+         console.log('Service worker registration failed');
+      })
+    }
+  })
+}*/
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
@@ -96,6 +110,7 @@ initMap = () => {
       'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     id: 'mapbox.streets'
   }).addTo(newMap);
+  
   updateRestaurants();
 }
 
@@ -119,7 +134,7 @@ updateRestaurants = () => {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
     }
-  });
+  })
 }
 
 /**
@@ -185,6 +200,7 @@ createRestaurantHTML = (restaurant) => {
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
   more.role='link';
+  more.classList.add('button');
   li.append(more)
 
   // Favorite button

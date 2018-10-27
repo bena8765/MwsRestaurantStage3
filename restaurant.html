@@ -43,14 +43,20 @@
     <!-- End map -->
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
+      <div class="restaurant-info">      
       <h2 id="restaurant-name"></h2>
       <img id="restaurant-img" role="banner">
       <p id="restaurant-cuisine" role="contentinfo"></p>
-      <div id="favorite-button"></div>
-      <p id="restaurant-address" role="note"></p>
+      <p id="restaurant-address" role="note"></p>      
       <table id="restaurant-hours" role="list"></table>
+      </div>
+      <!--<div>
+        <table id="restaurant-hours" role="list"></table>
+      </div>-->
+    <!-- end restaurant -->
       <section id="review-submission-container">
         <h3 class="review-header">Submit a review</h3>
+        <div id="favorite-button"></div>
         <div id="review-submission">
         <form id="user-review" onsubmit="return submitReview(this);">
           <label for="review-name">Name</label>
@@ -62,22 +68,21 @@
           <button>Submit</button>
         </form>
       </div>
+       </section>
+
+       <h3 class="reviewsHeader">Reviews</h3>
+      <!-- Beginning reviews -->
+      <section id="reviews-container">
+        <ul id="reviews-list"></ul>
+      </section>
     </section>
-    
-    <!-- end restaurant -->
-    <h3 class="reviewsHeader">Reviews</h3>
-    <!-- Beginning reviews -->
-    <section id="reviews-container">
-      <ul id="reviews-list" role="list"></ul>
-    </section>
-  </section>  
     <!-- End reviews -->
   </main>
   <!-- End main -->
 
   <!-- Beginning footer -->
   <footer id="footer">
-    Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+    Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
   <!-- End footer -->
   <script src="js/idb.js"></script>

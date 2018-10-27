@@ -1,4 +1,3 @@
-
 /**
  * Common database helper functions.
  */
@@ -12,7 +11,7 @@ class DBHelper {
     const port = 1337 // Change this to your server port
     return `http://localhost:${port}/restaurants`;
   }
-  // Retrieve reviews
+// Retrieve reviews
   static get DATABASE_REVIEWS_URL() {
     const port = 1337
     return `http://localhost:${port}/reviews`;
@@ -22,7 +21,7 @@ class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-   DBHelper.openDatabase().then(function(db) {
+    DBHelper.openDatabase().then(function(db) {
       const store = db.transaction(['restaurants']).objectStore('restaurants');
       store.getAll().then(function(data) {
         if (data.length > 0) {
@@ -49,13 +48,14 @@ class DBHelper {
         }
       });
     });
-}
+
+  }
 
   /**
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-DBHelper.openDatabase().then(function(db) {
+    DBHelper.openDatabase().then(function(db) {
       const store = db.transaction(['restaurants']).objectStore('restaurants');
       store.get(parseInt(id)).then(function(data) {
         if (data) {
@@ -64,10 +64,10 @@ DBHelper.openDatabase().then(function(db) {
           DBHelper._fetchRestaurantByIdAndAddToDb(id, callback);
         }
       });
-
     });
   }
-   /**
+
+  /**
    * Fetch a restaurant by its ID and add it to the database
    */
   static _fetchRestaurantByIdAndAddToDb(id, callback) {
@@ -177,7 +177,7 @@ DBHelper.openDatabase().then(function(db) {
       }
     });
   }
-static fetchReviews(id, callback) {
+  static fetchReviews(id, callback) {
     DBHelper.openDatabase().then(db => {
       const tx = db.transaction(['reviews'], 'readwrite');
       const store = tx.objectStore('reviews');
@@ -192,7 +192,8 @@ static fetchReviews(id, callback) {
       })
     });
   }
-   static _fetchReviewsAndAddToDB(id, callback) {
+
+  static _fetchReviewsAndAddToDB(id, callback) {
     fetch(DBHelper.DATABASE_REVIEWS_URL + `/?restaurant_id=${id}`)
     .then(function(response) {
       return response.json();
@@ -211,6 +212,8 @@ static fetchReviews(id, callback) {
       callback(errorResponse, null);
     });
   }
+
+
   /**
    * Restaurant page URL.
    */
@@ -277,9 +280,8 @@ static fetchReviews(id, callback) {
       return response.json();
     })
     .then(json => {
-      // Confirm review submission
-      callback(null,json)
-      DBHelper.addReviewToDb(json);      
+      callback(null, json);
+      DBHelper.addReviewToDb(json);
     })
     .catch(error => {
       DBHelper.openDatabase().then(function(db) {
@@ -290,6 +292,7 @@ static fetchReviews(id, callback) {
       callback(error, null);
     });
   }
+
   /**
    * Get pending reviews
    */
@@ -323,7 +326,7 @@ static fetchReviews(id, callback) {
       });
     });
   }
-  // Amen favorite status
+// Amen favorite status
   static amendFavorite(restaurant) {
     DBHelper.openDatabase().then(db => {
       const store = db.transaction(['restaurants'], 'readwrite')
@@ -331,7 +334,8 @@ static fetchReviews(id, callback) {
       store.put(restaurant);
     });
   }
-   //Pending favorite
+
+  //Pending favorite
   static pendingFavorite(id, callback) {
     DBHelper.openDatabase().then(function(db) {
       const store = db.transaction(['offline-favorites'], 'readwrite')
@@ -424,8 +428,8 @@ static fetchReviews(id, callback) {
     });
     return favorite;
   }
-  
-   static openDatabase() {
+
+  static openDatabase() {
     if (!'serviceWorker' in navigator) {
       return Promise.resolve();
     }
@@ -434,13 +438,16 @@ static fetchReviews(id, callback) {
       const restaurants = upgradeDb.createObjectStore('restaurants', {
         keyPath: 'id'
       });
-       const offlineReviews = upgradeDb.createObjectStore('offline-reviews', {
+
+      const offlineReviews = upgradeDb.createObjectStore('offline-reviews', {
         autoIncrement: true
       });
-       const offlineFavorites = upgradeDb.createObjectStore('offline-favorites', {
+
+      const offlineFavorites = upgradeDb.createObjectStore('offline-favorites', {
         keyPath: 'id'
       });
-       const reviews = upgradeDb.createObjectStore('reviews', {autoIncrement: true});
+
+      const reviews = upgradeDb.createObjectStore('reviews', {autoIncrement: true});
     });
   }
 
