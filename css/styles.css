@@ -47,6 +47,10 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   text-align: center;
   text-transform: uppercase;
 }
+.review-submission-container{
+    width: 100%;
+    margin: 0 auto;
+  }
 /* ====================== Navigation ====================== */
 nav {
   width: 100%;
@@ -90,7 +94,7 @@ nav h1 a {
 /* Add a color to all links inside the list */
 #breadcrumb li a {
     color: #0275d8;
-    text-decoration: none;
+    text-decoration: none;    
 }
 
 /* Add a color on mouse-over */
@@ -484,15 +488,15 @@ form input, form textarea {
   height: 24px;
 }
  form {
-  background-color: #fff;
-  border: 2px solid #f3f3f3;
-  display: block;
-  list-style-type: none;
-  margin: 30px auto 30px auto;
-  overflow: hidden;
-  padding: 10px 20px 20px;
-  position: relative;
-  width: 85%;
+ background-color: #fff;
+ border: 2px solid #f3f3f3;
+ display: block;
+ list-style-type: none;
+ margin: auto;
+ overflow: hidden;
+ padding: 10px 20px 20px;
+ position: relative;
+ width: 85%;
 }
  form label {
   width: 100%;
@@ -507,7 +511,12 @@ form input, form textarea {
   padding: 1em;
   color: #252831;
   font-weight: bold;
-  margin-bottom: -2.7em;
+  text-decoration: underline;
+}
+.reviewsHeader{
+  text-align: center;
+  color: #252831;
+  font-weight: bold;
   text-decoration: underline;
 }
 button {
@@ -539,4 +548,22 @@ button {
  @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+#review-submission-container {
+  justify-content: center;
+  /* padding: 39px 63px 4px; */
+}
+/* Modal */
+.review-modal {
+  z-index: 1;
+  top: 0px;
+  padding: 39px;
+  background-color: #fff;
+  width: initial;
+  margin-top: 18px;
+  border-radius: 50px;
+}
+ .review-modal-button {
+  position: absolute;
+  margin: auto;
 }

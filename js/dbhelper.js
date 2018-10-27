@@ -290,6 +290,7 @@ static fetchReviews(id, callback) {
         const store = tx.objectStore('offline-reviews');
         store.put(postData);
       });
+      callback(error, null);
     });
   }
   /**
