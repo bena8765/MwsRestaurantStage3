@@ -580,7 +580,7 @@ button {
 }
 /* Favorite button */
 .favorite-star{
-  margin-top: -56px;
+  margin-top: -10px;
   float:right !important;
   font-size: 35px;
   border: none;

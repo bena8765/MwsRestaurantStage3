@@ -195,7 +195,7 @@ createReviewHTML = (review) => {
   // Last update
   if (review.updatedAt && review.updatedAt !== review.createdAt) {
     const updatedDate = document.createElement('p');    
-    date.innerHTML = `Posted: ${new Date(review.createdAt).toDateString()}`;
+    updatedDate.innerHTML = `Updated: ${new Date(review.updatedAt).toDateString()}`;
     date.classList.add('review-date');
     li.appendChild(date);
   }
