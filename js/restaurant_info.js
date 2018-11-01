@@ -93,8 +93,6 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
-  //image.alt = `${restaurant.name} `;
-  //image.alt = `${restaurant.name} restaurant, ${shortDesc[restaurant.id-1]}`;
   image.alt = DBHelper.imageAltForRestaurant(restaurant);
   image.tabIndex = 0;
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
@@ -113,8 +111,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  //fillReviewsHTML();
+
 }
 
 /**
